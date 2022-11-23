@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  	<ContainerImageName>regkorea.azurecr.io/api-7</ContainerImageName>
+	<ContainerImageTag>1.0.0</ContainerImageTag>
+	<ContainerRegistry>regkorea.azurecr.io</ContainerRegistry>
+  </PropertyGroup>
+  <ItemGroup>
+	<PackageReference Include="Microsoft.NET.Build.Containers" Version="0.2.7" />
+  </ItemGroup>
+</Project>

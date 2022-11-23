@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontApp", "FrontApp\FrontApp.csproj", "{19CB7112-56E2-4AA0-802D-02AB15400824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiApp", "ApiApp\ApiApp.csproj", "{B6899080-B630-4419-9C82-AEC71BB90537}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19CB7112-56E2-4AA0-802D-02AB15400824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19CB7112-56E2-4AA0-802D-02AB15400824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19CB7112-56E2-4AA0-802D-02AB15400824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19CB7112-56E2-4AA0-802D-02AB15400824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6899080-B630-4419-9C82-AEC71BB90537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6899080-B630-4419-9C82-AEC71BB90537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6899080-B630-4419-9C82-AEC71BB90537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6899080-B630-4419-9C82-AEC71BB90537}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7D85941-B976-42A0-BEAB-3B94AFEB2035}
+	EndGlobalSection
+EndGlobal
