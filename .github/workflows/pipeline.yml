@@ -107,4 +107,5 @@ jobs:
         $dateInfo = Get-Date -Format "yyyy.MM.dd"
         $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
         ((Get-Content -path ./AKS/deploy.yaml -replace '##API_IMG##','${{ secrets.ACR_REGISTRY_URL }}/api-7/$(version)') | 
-        Set-Content -Path ./AKS/deploy.yaml         
+        Set-Content -Path ./AKS/deploy.yaml  
+        Get-Content -path ./AKS/deploy.yaml
