@@ -73,7 +73,7 @@ jobs:
         Set-Content -Path ./AKS/deploy.yaml  
         ((Get-Content -path ./AKS/deploy.yaml -Raw) -replace '##WEB_IMG##',"${{ secrets.ACR_REGISTRY_URL }}/front-7/$($version)") | 
         Set-Content -Path ./AKS/deploy.yaml  
-        (Get-Content -path ./AKS/deploy.yaml -Raw) | ForEach-Object {$_ -replace '"',''} | ./AKS/deploy.yaml  
+        (Get-Content -path ./AKS/deploy.yaml -Raw) | ForEach-Object {$_ -replace '"',''} | Out-File ./AKS/deploy.yaml  
         
     - run: mkdir -p path/to/artifact
     - run: copy ./AKS/deploy.yaml path/to/artifact/world.txt
