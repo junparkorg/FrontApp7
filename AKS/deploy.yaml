@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ApiApp7
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ApiApp7
+  template: 
+    metadata: 
+      labels: 
+         app: ApiApp7
+    spec: 
+      containers: 
+      - name: ApiApp7
+        image: "##API_IMG##"
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /WeatherForecast
+            port: 80
+            scheme: HTTP 
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ApiApp7
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: ApiApp7
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webfrontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webfrontend
+  template:
+    metadata:
+      labels:
+        app: webfrontend
+    spec:
+      containers:
+      - name: webfrontend
+        image: "##WEB_IMG##"
+        resources:
+           requests:
+             cpu: 50m
+           limits:
+             cpu: 100m
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webfrontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: webfrontend

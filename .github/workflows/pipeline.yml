@@ -102,3 +102,9 @@ jobs:
     needs: [ApiBuild,FrontBuild]
     steps:
     - uses: actions/checkout@v3
+    - name: Setting up Yaml version
+      run: |
+        $dateInfo = Get-Date -Format "yyyy.MM.dd"
+        $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
+        ((Get-Content -path ./AKS/deploy.yaml -replace '##API_IMG##','${{ secrets.ACR_REGISTRY_URL }}/api-7/$(version)') | 
+        Set-Content -Path ./AKS/deploy.yaml         
