@@ -97,6 +97,8 @@ jobs:
       with:
         resource-group: akskorea
         cluster-name: akskorea
+        admin: 'false'
+        use-kubelogin: 'true'
     - name: Deploy
       run: |
          kubectl apply -f ./AKS/deploy.yaml
