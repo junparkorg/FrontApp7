@@ -95,4 +95,5 @@ jobs:
         enable-AzPSSession: true
     - name: Deploy to AKS 
       run: |
+        az aks get-credentials --resource-group akskorea --name akskorea
         kubectl apply -f ./AKS/deploy.yaml
