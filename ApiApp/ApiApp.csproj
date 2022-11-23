@@ -6,7 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   	<ContainerImageName>api-7</ContainerImageName>
 	<ContainerRegistry>regkorea.azurecr.io</ContainerRegistry>
-	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION);latest</ContainerImageTag>
+	<!--<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION);latest</ContainerImageTag>-->
+	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">latest</ContainerImageTag>
   </PropertyGroup>
   <ItemGroup>
 	<PackageReference Include="Microsoft.NET.Build.Containers" Version="0.2.7" />
