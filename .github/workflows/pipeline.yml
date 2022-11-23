@@ -97,7 +97,6 @@ jobs:
       with:
         resource-group: akskorea
         cluster-name: akskorea
-    - uses: Azure/k8s-deploy@v3.1
-      with:
-        manifests: |
-           AKS/deploy.yaml
+    - name: Deploy
+      run: |
+         kubectl apply -f ./AKS/deploy.yaml
