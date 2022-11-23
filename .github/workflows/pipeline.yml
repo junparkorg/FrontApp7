@@ -93,7 +93,11 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
         enable-AzPSSession: true
-    - name: Deploy to AKS 
-      run: |
-        az aks get-credentials --resource-group akskorea --name akskorea
-        kubectl apply -f ./AKS/deploy.yaml
+    - uses: azure/aks-set-context@v3
+      with:
+        resource-group: akskorea
+        cluster-name: akskorea
+    - uses: Azure/k8s-deploy@v3.1
+      with:
+        manifests: |
+           AKS/deploy.yaml
