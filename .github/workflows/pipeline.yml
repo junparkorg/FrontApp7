@@ -8,61 +8,61 @@ on:
     branches: [ "master" ]
 
 jobs:
-  #ApiBuild:
-  #  runs-on: windows-latest
-  #  steps:
-  #  - uses: actions/checkout@v3
-  #  - name: Setting up build version
-  #    run: |
-  #      $dateInfo = Get-Date -Format "yyyy.MM.dd"
-  #      $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
-  #      echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-  #  - name: Setup .NET
-  #    uses: actions/setup-dotnet@v3
-  #    with:
-  #      dotnet-version: 7.0.x
-  #  - name: Restore dependencies
-  #    run: dotnet restore
-  #    working-directory: ./ApiApp
-  #  - name: Azure Container Registry Login
-  #    uses: Azure/docker-login@v1
-  #    with:
-  #      username: ${{ secrets.ACR_USERNAME }}
-  #      password: ${{ secrets.ACR_PASSWORD }}
-  #      login-server: ${{ secrets.ACR_REGISTRY_URL }}
-  #  - name: Publish
-  #    run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
-  #    working-directory: ./ApiApp
-
-  #FrontBuild:
-  #  runs-on: windows-latest
-  #  steps:
-  #  - uses: actions/checkout@v3
-  #  - name: Setting up build version
-  #    run: |
-  #      $dateInfo = Get-Date -Format "yyyy.MM.dd"
-  #      $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
-  #      echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-  #  - name: Setup .NET
-  #    uses: actions/setup-dotnet@v3
-  #    with:
-  #      dotnet-version: 7.0.x
-  #  - name: Restore dependencies
-  #    run: dotnet restore
-  #    working-directory: ./FrontApp
-  #  - name: Azure Container Registry Login
-  #    uses: Azure/docker-login@v1
-  #    with:
-  #      username: ${{ secrets.ACR_USERNAME }}
-  #      password: ${{ secrets.ACR_PASSWORD }}
-  #      login-server: ${{ secrets.ACR_REGISTRY_URL }}
-  #  - name: Publish
-  #    run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
-  #    working-directory: ./FrontApp
-
-  Deployment:
+  ApiBuild:
     runs-on: windows-latest
-  #  needs: [ApiBuild,FrontBuild]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setting up build version
+      run: |
+        $dateInfo = Get-Date -Format "yyyy.MM.dd"
+        $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
+        echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ./ApiApp
+    - name: Azure Container Registry Login
+      uses: Azure/docker-login@v1
+      with:
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+        login-server: ${{ secrets.ACR_REGISTRY_URL }}
+    - name: Publish
+      run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
+      working-directory: ./ApiApp
+
+  FrontBuild:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setting up build version
+      run: |
+        $dateInfo = Get-Date -Format "yyyy.MM.dd"
+        $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
+        echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ./FrontApp
+    - name: Azure Container Registry Login
+      uses: Azure/docker-login@v1
+      with:
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+        login-server: ${{ secrets.ACR_REGISTRY_URL }}
+    - name: Publish
+      run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
+      working-directory: ./FrontApp
+
+  PreDeploy:
+    runs-on: windows-latest
+    needs: [ApiBuild,FrontBuild]
     steps:
     - uses: actions/checkout@v3
     - name: Setting up Yaml version
@@ -81,3 +81,6 @@ jobs:
       with:
         name: yamlfile
         path: path/to/artifact/world.txt
+
+
+    

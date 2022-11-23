@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-  	<ContainerImageName>regkorea.azurecr.io/api-7</ContainerImageName>
+  	<ContainerImageName>api-7</ContainerImageName>
 	<ContainerRegistry>regkorea.azurecr.io</ContainerRegistry>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' == ''">latest</ContainerImageTag>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</ContainerImageTag>

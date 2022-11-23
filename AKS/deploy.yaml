@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ApiApp7
+  name: apiapp7
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ApiApp7
+      app: apiapp7
   template: 
     metadata: 
       labels: 
-         app: ApiApp7
+         app: apiapp7
     spec: 
       containers: 
-      - name: ApiApp7
+      - name: apiapp7
         image: "##API_IMG##"
         ports:
         - containerPort: 80
@@ -29,29 +29,29 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ApiApp7
+  name: apiapp7
 spec:
   ports:
   - port: 80
   selector:
-    app: ApiApp7
+    app: apiapp7
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webfrontend
+  name: webfront7
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webfrontend
+      app: webfront7
   template:
     metadata:
       labels:
-        app: webfrontend
+        app: webfront7
     spec:
       containers:
-      - name: webfrontend
+      - name: webfront7
         image: "##WEB_IMG##"
         resources:
            requests:
@@ -64,10 +64,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webfrontend
+  name: webfront7
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: webfrontend
+    app: webfront7

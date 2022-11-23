@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup>
-	<ContainerImageName>regkorea.azurecr.io/front-7</ContainerImageName>
+	<ContainerImageName>front-7</ContainerImageName>
 	<ContainerImageTag>1.0.0</ContainerImageTag>
 	<ContainerRegistry>regkorea.azurecr.io</ContainerRegistry>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' == ''">latest</ContainerImageTag>
