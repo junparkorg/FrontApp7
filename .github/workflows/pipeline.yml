@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+      id-token: write
+      contents: read
+
 jobs:
   ApiBuild:
     runs-on: windows-latest
@@ -60,7 +64,7 @@ jobs:
       run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
       working-directory: ./FrontApp
 
-  PreDeploy:
+  Deploy:
     runs-on: windows-latest
     needs: [ApiBuild,FrontBuild]
     steps:
@@ -82,5 +86,14 @@ jobs:
         name: yamlfile
         path: path/to/artifact/world.txt
 
-
-    
+    - name: OIDC Login to Azure Public Cloud with AzPowershell (enableAzPSSession true)
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+        enable-AzPSSession: true
+    - uses: Azure/k8s-deploy@v3.1
+      with:
+        manifests: |
+            AKS/deploy.yaml
