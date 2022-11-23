@@ -8,9 +8,9 @@
   <PropertyGroup>
 	<ContainerImageName>regkorea.azurecr.io/front-7</ContainerImageName>
 	<ContainerImageTag>1.0.0</ContainerImageTag>
-	<ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:7.0</ContainerBaseImage>
 	<ContainerRegistry>regkorea.azurecr.io</ContainerRegistry>
-	<!--<PublishTrimmed>true</PublishTrimmed>-->
+	<ContainerImageTag Condition="'$(BUILD_VERSION)' == ''">latest</ContainerImageTag>
+	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</ContainerImageTag>
  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Build.Containers" Version="0.2.7" />
