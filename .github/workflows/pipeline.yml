@@ -106,14 +106,19 @@ jobs:
     - name: Get kubeconfig
       run: az aks get-credentials -g ${{ secrets.RESOURCE_GROUP_NAME }} -n ${{ secrets.AKS_NAME }}
 
-    - name: Set up Homebrew
-      id: set-up-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
+    #- name: Set up Homebrew
+    #  id: set-up-homebrew
+    #  uses: Homebrew/actions/setup-homebrew@master
 
-    - name: Get kubelogin
+    #- name: Get kubelogin
+    #  run: |
+    #    brew install Azure/kubelogin/kubelogin
+
+    - name: install kubelogin
       run: |
-        brew update-reset
-        brew install Azure/kubelogin/kubelogin
+        wget https://github.com/Azure/kubelogin/releases/download/v0.0.24/kubelogin-linux-amd64.zip
+        unzip kubelogin-linux-amd64.zip
+        sudo mv bin/linux_amd64/kubelogin /usr/bin
 
     - name: Convert kubeconfig
       run: kubelogin convert-kubeconfig -l workloadidentity
