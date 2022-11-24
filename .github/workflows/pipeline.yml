@@ -111,7 +111,9 @@ jobs:
       uses: Homebrew/actions/setup-homebrew@master
 
     - name: Get kubelogin
-      run: brew install Azure/kubelogin/kubelogin
+      run: |
+        brew update
+        brew install Azure/kubelogin/kubelogin
 
     - name: Convert kubeconfig
       run: kubelogin convert-kubeconfig -l workloadidentity
