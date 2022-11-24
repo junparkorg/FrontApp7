@@ -158,6 +158,5 @@ jobs:
 
     - name: Convert kubeconfig
       run: |
-        export KUBECONFIG=/path/to/kubeconfig
         kubelogin convert-kubeconfig -l azurecli
         kubectl apply -f path/to/artifact/deploy.yaml
