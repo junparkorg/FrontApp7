@@ -106,6 +106,10 @@ jobs:
     - name: Get kubeconfig
       run: az aks get-credentials -g ${{ secrets.RESOURCE_GROUP_NAME }} -n ${{ secrets.AKS_NAME }}
 
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+
     - name: Get kubelogin
       run: brew install Azure/kubelogin/kubelogin
 
