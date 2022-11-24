@@ -159,7 +159,5 @@ jobs:
     - name: Convert kubeconfig
       run: |
         export KUBECONFIG=/path/to/kubeconfig
-        kubelogin convert-kubeconfig -l spn
-        export AAD_SERVICE_PRINCIPAL_CLIENT_ID='7ef5a60f-0cf6-44b3-a5fe-03f2ce21ed74'
-        export AAD_SERVICE_PRINCIPAL_CLIENT_SECRET='ivC8Q~n51qFIr0w0FnTiCSx9ysj-F.7xx1PlvbgK'
+        kubelogin convert-kubeconfig -l azurecli
         kubectl apply -f path/to/artifact/deploy.yaml
