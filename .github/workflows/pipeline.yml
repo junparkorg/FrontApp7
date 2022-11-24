@@ -112,7 +112,7 @@ jobs:
 
     #- name: Get kubelogin
     #  run: |
-    #    brew install Azure/kubelogin/kubelogin  
+    #    brew install Azure/kubelogin/kubelogin   
 
     - name: install kubelogin
       run: |
