@@ -86,7 +86,6 @@ jobs:
         name: yamlfile
         path: path/to/artifact/deploy.yaml
 
-
   Deploy:
     runs-on: ubuntu-latest
     needs: [PreDeploy]
