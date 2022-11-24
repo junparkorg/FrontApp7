@@ -112,7 +112,7 @@ jobs:
 
     - name: Get kubelogin
       run: |
-        brew update
+        brew update-reset
         brew install Azure/kubelogin/kubelogin
 
     - name: Convert kubeconfig
