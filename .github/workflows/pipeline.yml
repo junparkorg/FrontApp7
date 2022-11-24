@@ -149,13 +149,17 @@ jobs:
       with:
         resource-group: '${{ secrets.RESOURCE_GROUP_NAME }}' 
         cluster-name: '${{ secrets.AKS_NAME }}'
-    - name: Setup kubectl
-      id: install-kubectl
-      uses: azure/setup-kubectl@v3
-    - name: Deploy to AKS
-      id: deploy-aks
-      uses: Azure/k8s-deploy@v4
-      with:
-         namespace: 'default'
-         manifests: |
-             path/to/artifact/deploy.yaml
+    
+    - name: install kubelogin
+      run: |
+        wget https://github.com/Azure/kubelogin/releases/download/v0.0.24/kubelogin-linux-amd64.zip
+        unzip kubelogin-linux-amd64.zip
+        sudo mv bin/linux_amd64/kubelogin /usr/bin
+
+    - name: Convert kubeconfig
+      run: |
+        export KUBECONFIG=/path/to/kubeconfig
+        kubelogin convert-kubeconfig -l spn
+        export AAD_SERVICE_PRINCIPAL_CLIENT_ID='7ef5a60f-0cf6-44b3-a5fe-03f2ce21ed74'
+        export AAD_SERVICE_PRINCIPAL_CLIENT_SECRET='ivC8Q~n51qFIr0w0FnTiCSx9ysj-F.7xx1PlvbgK'
+        kubectl apply -f path/to/artifact/deploy.yaml
