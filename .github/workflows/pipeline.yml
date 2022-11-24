@@ -113,6 +113,7 @@ jobs:
         unzip kubelogin-linux-amd64.zip
         sudo mv bin/linux_amd64/kubelogin /usr/bin
 
+
     - name: Convert kubeconfig
       run: kubelogin convert-kubeconfig -l workloadidentity
 
