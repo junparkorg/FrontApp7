@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   	<ContainerImageName>api-7</ContainerImageName>
-	<ContainerRegistry>regkorea.azurecr.io</ContainerRegistry>
+	<ContainerRegistry>akseus.azurecr.io</ContainerRegistry>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</ContainerImageTag>
   </PropertyGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@
   <PropertyGroup>
 	<ContainerImageName>front-7</ContainerImageName>
 	<ContainerImageTag>1.0.0</ContainerImageTag>
-	<ContainerRegistry>regkorea.azurecr.io</ContainerRegistry>
+	<ContainerRegistry>akseus.azurecr.io</ContainerRegistry>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</ContainerImageTag>	
  </PropertyGroup>
   <ItemGroup>
