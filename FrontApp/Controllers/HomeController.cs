@@ -1,5 +1,6 @@
 ﻿using FrontApp.Data;
 using FrontApp.Models;
+using FrontApp.Util;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 using System.Diagnostics;
@@ -10,11 +11,14 @@ namespace FrontApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRedisService _redis;
+        ICacheTelemetry _cacheTelemetry;
 
-        public HomeController(ILogger<HomeController> logger, IRedisService redis)
+        public HomeController(ILogger<HomeController> logger, IRedisService redis,
+            ICacheTelemetry cacheTelemetry)
         {
             _logger = logger;
             _redis = redis;
+            _cacheTelemetry = cacheTelemetry;
         }
 
         public async Task<IActionResult> Index()
@@ -37,6 +41,7 @@ namespace FrontApp.Controllers
             string cachedTimeUtc = string.Empty;
             if (_redis != null)
             {
+                _cacheTelemetry.Start();
                 cachedTimeUtc = await _redis.GetAsync("CachedTimeInUTC");
 
                 if (string.IsNullOrEmpty(cachedTimeUtc))
@@ -45,7 +50,12 @@ namespace FrontApp.Controllers
                     TimeSpan cacheExpire = new TimeSpan(0, 0, 10);
                     await _redis.SetAsync("CachedTimeInUTC", Now, cacheExpire);
                     cachedTimeUtc = Now;
-                }                
+                    _cacheTelemetry.End(CacheTelemetryNames.GetRedisMiss, "CachedTimeInUTC");
+                }
+                else
+                {
+                    _cacheTelemetry.End(CacheTelemetryNames.GetRedisHit, "CachedTimeInUTC");
+                }
                 ViewBag.CachedTimeUTC = cachedTimeUtc;
             }
             return View();

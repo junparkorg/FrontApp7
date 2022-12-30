@@ -1,10 +1,14 @@
 using FrontApp.Data;
+using FrontApp.Util;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// App insight - telemetry
+builder.Services.AddTransient<ICacheTelemetry, WebCacheTelemetry>();
 
 // Redis Service 
 string redisConnectionString = builder.Configuration["ConnectionStrings:Redis"];
@@ -15,6 +19,7 @@ if (multiPlex != null)
     IDatabase database = multiPlex.GetDatabase();
     builder.Services.AddSingleton(_ => database);
 }
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
 var app = builder.Build();
 
