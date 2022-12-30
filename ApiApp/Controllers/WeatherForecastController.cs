@@ -23,8 +23,8 @@ namespace ApiApp.Controllers
         {
             using(HttpClient client = new HttpClient())
             {
-                var result = 
-                    await client.GetStringAsync("https://appservicekr.azurewebsites.net/Home/About")
+                var result =
+                    await client.GetStringAsync("https://appservicekr.azurewebsites.net/Home/About");
             }
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
