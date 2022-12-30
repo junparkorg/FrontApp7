@@ -28,7 +28,8 @@
             var dependencyTelemetry = new DependencyTelemetry();
             dependencyTelemetry.Name = eventName;
             dependencyTelemetry.Properties.Add("Key", key);
-            dependencyTelemetry.Duration = new TimeSpan(_stopwatch == null ? 0 : _stopwatch.ElapsedTicks);
+            dependencyTelemetry.Duration = TimeSpan.FromMilliseconds(_stopwatch == null?0:
+                _stopwatch.ElapsedMilliseconds);
             dependencyTelemetry.Type = "CacheOperation";
             _telemetryClient.TrackDependency(dependencyTelemetry);
         }
