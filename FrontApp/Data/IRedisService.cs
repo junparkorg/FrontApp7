@@ -1,4 +1,8 @@
-﻿namespace FrontApp.Data
+﻿using Polly.Retry;
+using Polly;
+using StackExchange.Redis;
+
+namespace FrontApp.Data
 {
     public interface IRedisService
     {
