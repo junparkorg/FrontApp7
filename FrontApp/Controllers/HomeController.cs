@@ -1,5 +1,7 @@
-﻿using FrontApp.Models;
+﻿using FrontApp.Data;
+using FrontApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis;
 using System.Diagnostics;
 
 namespace FrontApp.Controllers
@@ -7,10 +9,12 @@ namespace FrontApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IRedisService _redis;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IRedisService redis)
         {
             _logger = logger;
+            _redis = redis;
         }
 
         public async Task<IActionResult> Index()
@@ -27,6 +31,28 @@ namespace FrontApp.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> Redis()
+        {
+            string cachedTimeUtc = string.Empty;
+            if (_redis != null)
+            {
+                cachedTimeUtc = await _redis.GetAsync("CachedTimeInUTC");
+
+                if (string.IsNullOrEmpty(cachedTimeUtc))
+                {
+                    var Now = DateTime.UtcNow.ToString();
+                    TimeSpan cacheExpire = new TimeSpan(0, 0, 10);
+                    await _redis.SetAsync("CachedTimeInUTC", Now, cacheExpire);
+                    cachedTimeUtc = Now;
+                }                
+                ViewBag.CachedTimeUTC = cachedTimeUtc;
+            }
+            return View();
+        }
+
+
+
 
         public IActionResult Privacy()
         {

@@ -1,7 +1,20 @@
+using FrontApp.Data;
+using StackExchange.Redis;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Redis Service 
+string redisConnectionString = builder.Configuration["ConnectionStrings:Redis"];
+builder.Services.AddSingleton<IRedisService, RedisService>();
+ConnectionMultiplexer multiPlex = ConnectionMultiplexer.Connect(redisConnectionString);
+if (multiPlex != null)
+{
+    IDatabase database = multiPlex.GetDatabase();
+    builder.Services.AddSingleton(_ => database);
+}
 
 var app = builder.Build();
 
