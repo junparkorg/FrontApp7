@@ -1,5 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Error!";
+    ViewData["Title"] = "Redis!";
 }
 
-Server Error!!
+Redis Cache 
+
+<p><strong>Current Time:</strong>@DateTime.UtcNow.ToString()</p>
+<p><strong>Cached Time:</strong>@ViewBag.CachedTimeUTC </p>
