@@ -11,6 +11,9 @@ spec:
     metadata: 
       labels: 
          app: apiapp7
+      annotations:
+         prometheus.io/scrape: 'true'
+         prometheus.io/port: '80'
     spec: 
       containers: 
       - name: apiapp7
@@ -49,6 +52,9 @@ spec:
     metadata:
       labels:
         app: webfront7
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '80'
     spec:
       containers:
       - name: webfront7

@@ -1,5 +1,6 @@
 using FrontApp.Data;
 using FrontApp.Util;
+using Prometheus;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICAT
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -31,12 +33,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+// prometheus metrics 
+app.UseMetricServer();
+//app.UseHttpMetrics();
+app.UseRequestMiddleware();
 
 app.MapControllerRoute(
     name: "default",

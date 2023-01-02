@@ -2,3 +2,9 @@
 global using Polly;
 global using Microsoft.ApplicationInsights;
 global using Microsoft.ApplicationInsights.DataContracts;
+global using Prometheus;
+global using System;
+global using System.Threading.Tasks;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Builder;
