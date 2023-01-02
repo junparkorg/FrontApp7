@@ -18,6 +18,11 @@ spec:
       containers: 
       - name: apiapp7
         image: "##API_IMG##"
+        resources:
+           requests:
+             cpu: 50m
+           limits:
+             cpu: 100m
         ports:
         - containerPort: 80
         livenessProbe:
@@ -61,9 +66,9 @@ spec:
         image: "##WEB_IMG##"
         resources:
            requests:
-             cpu: 50m
-           limits:
              cpu: 100m
+           limits:
+             cpu: 200m
         ports:
         - containerPort: 80
 ---

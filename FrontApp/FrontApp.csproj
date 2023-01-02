@@ -21,5 +21,11 @@
     <PackageReference Include="prometheus-net.AspNetCore" Version="7.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.86" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Home\ServerError.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>

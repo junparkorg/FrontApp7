@@ -61,7 +61,11 @@ namespace FrontApp.Controllers
             return View();
         }
 
-
+        public IActionResult ServerError()
+        {
+            throw new Exception("Server Error!!!");
+            return View();
+        }
 
 
         public IActionResult Privacy()
