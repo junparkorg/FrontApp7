@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Delay!";
+}
+
+Random Delay
+
+<p><strong>Current Time:</strong>@DateTime.UtcNow.ToString()</p>
+<div>
+    @ViewData["Delay"] msec delayed
+</div>

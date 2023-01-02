@@ -68,6 +68,15 @@ namespace FrontApp.Controllers
         }
 
 
+        public async Task<IActionResult> RandomDelay()
+        {
+            var delay = Random.Shared.Next(1, 10000);
+            await Task.Delay(delay);
+            ViewData["Delay"] = delay;
+            return View();
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
