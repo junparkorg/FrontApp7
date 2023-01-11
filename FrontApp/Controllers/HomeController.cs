@@ -61,6 +61,8 @@ namespace FrontApp.Controllers
             return View();
         }
 
+
+        // generate 500 internal server error
         public IActionResult ServerError()
         {
             throw new Exception("Server Error!!!");
