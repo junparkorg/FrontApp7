@@ -87,6 +87,8 @@ jobs:
         path: path/to/artifact/deploy.yaml
   Deploy:
     runs-on: ubuntu-latest
+    outputs:
+      serviceip: ${{ steps.run_kubectl.outputs.serviceip }}
     needs: [PreDeploy]
     steps:
     - uses: actions/download-artifact@master
