@@ -143,7 +143,7 @@ jobs:
 
   AzLoadTest:
     uses: junparkorg/FrontApp7/.github/workflows/azloadtest.yml@master
-    #needs: [Deploy] 
+    #needs: [Deploy]
     secrets:
        clientID: ${{ secrets.AZURE_CLIENT_ID }}
        tenantID: ${{ secrets.AZURE_TENANT_ID }}
