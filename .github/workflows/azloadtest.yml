@@ -20,7 +20,7 @@ permissions:
 env:
   LOAD_TEST_RESOURCE: "jploadtesting"
   LOAD_TEST_RESOURCE_GROUP: "loadtest"
-  #HOST: ${{ secrets.hostIP }}
+  #HOST: ${{ secrets.hostIP }} 
   HOST: "20.253.12.70"
   CONCURRENT_USERS: "10"
 
