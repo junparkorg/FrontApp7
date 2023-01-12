@@ -8,8 +8,8 @@ on:
         required: true
       tenantID:
         required: true
-      hostIP:
-        required: true
+      #hostIP:
+      #  required: true
       subscriptionID:
         required: true
 

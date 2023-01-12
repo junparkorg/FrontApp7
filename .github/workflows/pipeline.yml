@@ -12,142 +12,140 @@ permissions:
       contents: read
 
 jobs:
-  ApiBuild:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setting up build version
-      run: |
-        $dateInfo = Get-Date -Format "yyyy.MM.dd"
-        $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
-        echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-      working-directory: ./ApiApp
-    - name: Azure Container Registry Login
-      uses: Azure/docker-login@v1
-      with:
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
-        login-server: ${{ secrets.ACR_REGISTRY_URL }}
-    - name: Publish
-      run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
-      working-directory: ./ApiApp
+  #ApiBuild:
+  #  runs-on: windows-latest
+  #  steps:
+  #  - uses: actions/checkout@v3
+  #  - name: Setting up build version
+  #    run: |
+  #      $dateInfo = Get-Date -Format "yyyy.MM.dd"
+  #      $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
+  #      echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+  #  - name: Setup .NET
+  #    uses: actions/setup-dotnet@v3
+  #    with:
+  #      dotnet-version: 7.0.x
+  #  - name: Restore dependencies
+  #    run: dotnet restore
+  #    working-directory: ./ApiApp
+  #  - name: Azure Container Registry Login
+  #    uses: Azure/docker-login@v1
+  #    with:
+  #      username: ${{ secrets.ACR_USERNAME }}
+  #      password: ${{ secrets.ACR_PASSWORD }}
+  #      login-server: ${{ secrets.ACR_REGISTRY_URL }}
+  #  - name: Publish
+  #    run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
+  #    working-directory: ./ApiApp
 
-  FrontBuild:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setting up build version
-      run: |
-        $dateInfo = Get-Date -Format "yyyy.MM.dd"
-        $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
-        echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-      working-directory: ./FrontApp
-    - name: Azure Container Registry Login
-      uses: Azure/docker-login@v1
-      with:
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
-        login-server: ${{ secrets.ACR_REGISTRY_URL }}
-    - name: Publish
-      run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
-      working-directory: ./FrontApp
+  #FrontBuild:
+  #  runs-on: windows-latest
+  #  steps:
+  #  - uses: actions/checkout@v3
+  #  - name: Setting up build version
+  #    run: |
+  #      $dateInfo = Get-Date -Format "yyyy.MM.dd"
+  #      $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
+  #      echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+  #  - name: Setup .NET
+  #    uses: actions/setup-dotnet@v3
+  #    with:
+  #      dotnet-version: 7.0.x
+  #  - name: Restore dependencies
+  #    run: dotnet restore
+  #    working-directory: ./FrontApp
+  #  - name: Azure Container Registry Login
+  #    uses: Azure/docker-login@v1
+  #    with:
+  #      username: ${{ secrets.ACR_USERNAME }}
+  #      password: ${{ secrets.ACR_PASSWORD }}
+  #      login-server: ${{ secrets.ACR_REGISTRY_URL }}
+  #  - name: Publish
+  #    run: dotnet publish --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
+  #    working-directory: ./FrontApp
 
-  PreDeploy:
-    runs-on: windows-latest
-    needs: [ApiBuild,FrontBuild]
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setting up Yaml version
-      run: |
-        $dateInfo = Get-Date -Format "yyyy.MM.dd"
-        $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
-        ((Get-Content -path ./AKS/deploy.yaml -Raw) -replace '##API_IMG##',"${{ secrets.ACR_REGISTRY_URL }}/api-7:$($version)") | 
-        Set-Content -Path ./AKS/deploy.yaml  
-        ((Get-Content -path ./AKS/deploy.yaml -Raw) -replace '##WEB_IMG##',"${{ secrets.ACR_REGISTRY_URL }}/front-7:$($version)") | 
-        Set-Content -Path ./AKS/deploy.yaml  
-        (Get-Content -path ./AKS/deploy.yaml -Raw) | ForEach-Object {$_ -replace '"',''} | Out-File ./AKS/deploy.yaml  
+  #PreDeploy:
+  #  runs-on: windows-latest
+  #  needs: [ApiBuild,FrontBuild]
+  #  steps:
+  #  - uses: actions/checkout@v3
+  #  - name: Setting up Yaml version
+  #    run: |
+  #      $dateInfo = Get-Date -Format "yyyy.MM.dd"
+  #      $version = (-join($($dateInfo),"-",$($Env:GITHUB_RUN_NUMBER)))
+  #      ((Get-Content -path ./AKS/deploy.yaml -Raw) -replace '##API_IMG##',"${{ secrets.ACR_REGISTRY_URL }}/api-7:$($version)") | 
+  #      Set-Content -Path ./AKS/deploy.yaml  
+  #      ((Get-Content -path ./AKS/deploy.yaml -Raw) -replace '##WEB_IMG##',"${{ secrets.ACR_REGISTRY_URL }}/front-7:$($version)") | 
+  #      Set-Content -Path ./AKS/deploy.yaml  
+  #      (Get-Content -path ./AKS/deploy.yaml -Raw) | ForEach-Object {$_ -replace '"',''} | Out-File ./AKS/deploy.yaml  
         
-    - run: mkdir -p path/to/artifact
-    - run: copy ./AKS/deploy.yaml path/to/artifact/deploy.yaml
-    - uses: actions/upload-artifact@v3
-      with:
-        name: yamlfile
-        path: path/to/artifact/deploy.yaml
-  Deploy:
-    runs-on: ubuntu-latest
-    outputs:
-      serviceip: ${{ steps.run_kubectl.outputs.serviceip }}
-    needs: [PreDeploy]
-    steps:
-    - uses: actions/download-artifact@master
-      with:
-        name: yamlfile
-        path: path/to/artifact
+  #  - run: mkdir -p path/to/artifact
+  #  - run: copy ./AKS/deploy.yaml path/to/artifact/deploy.yaml
+  #  - uses: actions/upload-artifact@v3
+  #    with:
+  #      name: yamlfile
+  #      path: path/to/artifact/deploy.yaml
+  #Deploy:
+  #  runs-on: ubuntu-latest
+  #  outputs:
+  #    serviceip: ${{ steps.run_kubectl.outputs.serviceip }}
+  #  needs: [PreDeploy]
+  #  steps:
+  #  - uses: actions/download-artifact@master
+  #    with:
+  #      name: yamlfile
+  #      path: path/to/artifact
 
-    - name: Az CLI login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+  #  - name: Az CLI login
+  #    uses: azure/login@v1
+  #    with:
+  #      client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  #      tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #      subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
         
-    - name: Get kubeconfig
-      run: az aks get-credentials -g ${{ secrets.RESOURCE_GROUP_NAME }} -n ${{ secrets.AKS_NAME }}
+  #  - name: Get kubeconfig
+  #    run: az aks get-credentials -g ${{ secrets.RESOURCE_GROUP_NAME }} -n ${{ secrets.AKS_NAME }}
 
     
-    - name: install kubelogin
-      run: |
-        wget https://github.com/Azure/kubelogin/releases/download/v0.0.25/kubelogin-linux-amd64.zip
-        unzip kubelogin-linux-amd64.zip
-        sudo mv bin/linux_amd64/kubelogin /usr/bin
+  #  - name: install kubelogin
+  #    run: |
+  #      wget https://github.com/Azure/kubelogin/releases/download/v0.0.25/kubelogin-linux-amd64.zip
+  #      unzip kubelogin-linux-amd64.zip
+  #      sudo mv bin/linux_amd64/kubelogin /usr/bin
 
 
-    - name: Convert kubeconfig
-      run: kubelogin convert-kubeconfig -l workloadidentity
+  #  - name: Convert kubeconfig
+  #    run: kubelogin convert-kubeconfig -l workloadidentity
 
-    - name: Retrieve id-token and store
-      run: |
-        IDTOKEN=$(curl -sSL -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=api://AzureADTokenExchange" | jq -r '.value')
-        echo $IDTOKEN > ${RUNNER_TEMP}/.token
-        jwtd() {
-            if [[ -x $(command -v jq) ]]; then
-                jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
-                echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
-            fi
-        }
-        jwtd $IDTOKEN
-        echo "::set-output name=idToken::${IDTOKEN}"
+  #  - name: Retrieve id-token and store
+  #    run: |
+  #      IDTOKEN=$(curl -sSL -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=api://AzureADTokenExchange" | jq -r '.value')
+  #      echo $IDTOKEN > ${RUNNER_TEMP}/.token
+  #      jwtd() {
+  #          if [[ -x $(command -v jq) ]]; then
+  #              jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
+  #              echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
+  #          fi
+  #      }
+  #      jwtd $IDTOKEN
+  #      echo "::set-output name=idToken::${IDTOKEN}"
 
-    - name: Run kubectl
-      id: run_kubectl
-      env:
-        AZURE_AUTHORITY_HOST: https://login.microsoftonline.com/
-        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      run: |
-        export AZURE_FEDERATED_TOKEN_FILE=${RUNNER_TEMP}/.token
-        kubectl apply -f path/to/artifact/deploy.yaml
-        #serviceip=$(kubectl get svc webfront7 -o json | jq .status.loadBalancer.ingress[0].ip)
-        #echo $serviceip
-        echo "serviceip=$(kubectl get svc webfront7 -o json | jq .status.loadBalancer.ingress[0].ip)" >> $GITHUB_OUTPUT
+  #  - name: Run kubectl
+  #    id: run_kubectl
+  #    env:
+  #      AZURE_AUTHORITY_HOST: https://login.microsoftonline.com/
+  #      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  #      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  #    run: |
+  #      export AZURE_FEDERATED_TOKEN_FILE=${RUNNER_TEMP}/.token
+  #      kubectl apply -f path/to/artifact/deploy.yaml
+  #      echo "serviceip=$(kubectl get svc webfront7 -o json | jq .status.loadBalancer.ingress[0].ip)" >> $GITHUB_OUTPUT
 
   AzLoadTest:
     uses: junparkorg/FrontApp7/.github/workflows/azloadtest.yml@master
-    needs: [Deploy]
+    #needs: [Deploy]
     secrets:
        clientID: ${{ secrets.AZURE_CLIENT_ID }}
        tenantID: ${{ secrets.AZURE_TENANT_ID }}
-       hostIP: ${{ needs.Deploy.outputs.serviceip }}
+       #hostIP: ${{ needs.Deploy.outputs.serviceip }}
        subscriptionID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}        
