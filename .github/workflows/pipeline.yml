@@ -137,9 +137,9 @@ jobs:
       run: |
         export AZURE_FEDERATED_TOKEN_FILE=${RUNNER_TEMP}/.token
         kubectl apply -f path/to/artifact/deploy.yaml
-        serviceip=$(kubectl get svc webfront7 -o json | jq .status.loadBalancer.ingress[0].ip)
-        echo $serviceip
-        echo "serviceip=$(serviceip)" >> $GITHUB_OUTPUT
+        #serviceip=$(kubectl get svc webfront7 -o json | jq .status.loadBalancer.ingress[0].ip)
+        #echo $serviceip
+        echo "serviceip=$(kubectl get svc webfront7 -o json | jq .status.loadBalancer.ingress[0].ip)" >> $GITHUB_OUTPUT
 
   AzLoadTest:
     runs-on: ubuntu-latest
