@@ -39,7 +39,7 @@ jobs:
         enable-AzPSSession: true
       
     - name: Azure Load Testing
-      uses: Azure/load-testing@v1.1.4
+      uses: Azure/load-testing@v1.1.8
       with:
         # Path of the YAML file. Should be fully qualified path or relative to the default working directory
         loadtestConfigFile: './LoadTest/SampleApp.yaml'
