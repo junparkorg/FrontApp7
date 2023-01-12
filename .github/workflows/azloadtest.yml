@@ -1,0 +1,62 @@
+name: azure load test
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      clientID:
+        required: true
+      tenantID:
+        required: true
+      subscriptionID:
+        required: true
+
+permissions:
+      id-token: write
+      contents: read
+
+env:
+  LOAD_TEST_RESOURCE: "jploadtesting"
+  LOAD_TEST_RESOURCE_GROUP: "LoadTest"
+  HOST: "appservicekorea.azurewebsites.net"
+  CONCURRENT_USERS: "10"
+
+jobs:
+  azloadtest:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.clientID }}
+        tenant-id: ${{ secrets.tenantID }}
+        subscription-id: ${{ secrets.subscriptionID }}
+        enable-AzPSSession: true
+      
+    - name: Azure Load Testing
+      uses: Azure/load-testing@v1.1.4
+      with:
+        # Path of the YAML file. Should be fully qualified path or relative to the default working directory
+        loadtestConfigFile: 'SampleApp.yaml'
+        # Enter or Select the name of an existing Azure Load Testing resource
+        loadtestResource: ${{ env.LOAD_TEST_RESOURCE }}
+        # Enter or Select the Azure Resource Group that contains the Load test resource specified above
+        resourceGroup: ${{ env.LOAD_TEST_RESOURCE_GROUP }}
+        env: |
+            [
+              {
+              "name": "host",
+              "value": "${{ env.HOST }}"
+              },
+              {
+              "name": "concurrentUsers",
+              "value": "${{ env.CONCURRENT_USERS }}"
+              }
+            ]     
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: loadTestResults
+        path: ${{ github.workspace }}/loadTest
