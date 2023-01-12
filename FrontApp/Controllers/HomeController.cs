@@ -62,6 +62,22 @@ namespace FrontApp.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<string> Edit(int money, string name)
+        {
+            if (money <= 0)
+            {
+                return $"{name} got nothing";
+            }
+
+            int delay =
+                System.Security.Cryptography.RandomNumberGenerator.GetInt32(0, 5000);
+
+            await Task.Delay(delay);
+
+            return $"{name} got {money} USD!!";
+        }
+
         // generate 500 internal server error
         public IActionResult ServerError()
         {

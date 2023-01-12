@@ -1,0 +1,10 @@
+version: v0.1
+testName: aksloadtest
+testPlan: TestPlan.jmx
+description: 'AKS Load test'
+engineInstances: 1
+configurationFiles:
+- namemoney.csv
+failureCriteria: 
+- avg(response_time_ms) > 1000
+- percentage(error) > 20

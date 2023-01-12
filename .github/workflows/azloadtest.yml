@@ -8,6 +8,8 @@ on:
         required: true
       tenantID:
         required: true
+      hostIP:
+        required: true
       subscriptionID:
         required: true
 
@@ -18,7 +20,7 @@ permissions:
 env:
   LOAD_TEST_RESOURCE: "jploadtesting"
   LOAD_TEST_RESOURCE_GROUP: "LoadTest"
-  HOST: "appservicekorea.azurewebsites.net"
+  HOST: ${{ secrets.hostIP }}
   CONCURRENT_USERS: "10"
 
 jobs:
@@ -39,7 +41,7 @@ jobs:
       uses: Azure/load-testing@v1.1.4
       with:
         # Path of the YAML file. Should be fully qualified path or relative to the default working directory
-        loadtestConfigFile: 'SampleApp.yaml'
+        loadtestConfigFile: './LoadTest/SampleApp.yaml'
         # Enter or Select the name of an existing Azure Load Testing resource
         loadtestResource: ${{ env.LOAD_TEST_RESOURCE }}
         # Enter or Select the Azure Resource Group that contains the Load test resource specified above
