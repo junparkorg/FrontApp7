@@ -10,8 +10,8 @@
 	<ContainerImageTag>1.0.0</ContainerImageTag>
 	<ContainerRegistry>akseus.azurecr.io</ContainerRegistry>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</ContainerImageTag>
-	<ApplicationInsightsResourceId>/subscriptions/58b024be-3124-435c-afaa-63de3d04f974/resourceGroups/AppserviceKorea/providers/microsoft.insights/components/insightkorea</ApplicationInsightsResourceId>
-	<UserSecretsId>1d538f1a-e211-4daf-8585-1f9869b1c18e</UserSecretsId>	
+	<ApplicationInsightsResourceId Condition="'$(ApplicationInsightsResourceId)' != ''">$(ApplicationInsightsResourceId)</ApplicationInsightsResourceId>
+	<UserSecretsId Condition="'$(UserSecretsId)' != ''">$(UserSecretsId)</UserSecretsId>	
  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
