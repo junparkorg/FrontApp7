@@ -20,8 +20,8 @@ permissions:
 env:
   #HOST: ${{ secrets.hostIP }}   
   CONCURRENT_USERS: "10"
-  LOAD_TEST_RESOURCE: '${{ secrets.LOAD_TEST_RESOURCE }}'
-  LOAD_TEST_RESOURCE_GROUP: '${{ secrets.LOAD_TEST_RESOURCE_GROUP }}'
+  LOAD_TEST_RESOURCE: "jploadtesting"
+  LOAD_TEST_RESOURCE_GROUP: "LoadTest"
   TargetHost: '${{ secrets.TargetHost }}'
 
 jobs:
