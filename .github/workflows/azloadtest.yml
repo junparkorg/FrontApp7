@@ -24,6 +24,10 @@ env:
 jobs:
   azloadtest:
     runs-on: ubuntu-latest
+    env:
+        LOAD_TEST_RESOURCE: '${{ secrets.LOAD_TEST_RESOURCE }}'
+        LOAD_TEST_RESOURCE_GROUP: '${{ secrets.LOAD_TEST_RESOURCE_GROUP }}'
+        TargetHost: '${{ secrets.TargetHost }}'
     
     steps:
     - uses: actions/checkout@v2
@@ -41,14 +45,14 @@ jobs:
         # Path of the YAML file. Should be fully qualified path or relative to the default working directory
         loadtestConfigFile: './LoadTest/SampleApp.yaml'
         # Enter or Select the name of an existing Azure Load Testing resource 
-        loadtestResource: ${{ secrets.LOAD_TEST_RESOURCE }}
+        loadtestResource: ${{ env.LOAD_TEST_RESOURCE }}
         # Enter or Select the Azure Resource Group that contains the Load test resource specified above 
-        resourceGroup: ${{ secrets.LOAD_TEST_RESOURCE_GROUP }} 
+        resourceGroup: ${{ env.LOAD_TEST_RESOURCE_GROUP }} 
         env: |
             [
               {
               "name": "host",
-              "value": "${{ secrets.TargetHost }}"
+              "value": "${{ env.TargetHost }}"
               },
               {
               "name": "concurrentUsers",
