@@ -1,5 +1,6 @@
 namespace ApiApp
 {
+    // weather forecast
     public class WeatherForecast
     {
         public DateOnly Date { get; set; }
