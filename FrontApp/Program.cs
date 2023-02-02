@@ -1,5 +1,6 @@
 using FrontApp.Data;
 using FrontApp.Util;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Prometheus;
 using StackExchange.Redis;
 
@@ -20,8 +21,9 @@ if (multiPlex != null)
     IDatabase database = multiPlex.GetDatabase();
     builder.Services.AddSingleton(_ => database);
 }
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
+var options = new ApplicationInsightsServiceOptions { ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"] };
+builder.Services.AddApplicationInsightsTelemetry(options: options);
 var app = builder.Build();
 
 

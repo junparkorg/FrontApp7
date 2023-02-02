@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup>
+	<!-- https://learn.microsoft.com/en-us/dotnet/core/docker/publish-as-container -->
 	<ContainerImageName>front-7</ContainerImageName>
 	<ContainerImageTag>1.0.0</ContainerImageTag>
 	<ContainerRegistry>akseus.azurecr.io</ContainerRegistry>
