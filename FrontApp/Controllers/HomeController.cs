@@ -71,7 +71,7 @@ namespace FrontApp.Controllers
             }
 
             int delay =
-                System.Security.Cryptography.RandomNumberGenerator.GetInt32(0, 1000);
+                System.Security.Cryptography.RandomNumberGenerator.GetInt32(1000, 3000);
 
             await Task.Delay(delay);
 
