@@ -13,6 +13,7 @@ namespace FrontApp.Controllers
         private readonly IRedisService _redis;
         ICacheTelemetry _cacheTelemetry;
 
+        // home controller
         public HomeController(ILogger<HomeController> logger, IRedisService redis,
             ICacheTelemetry cacheTelemetry)
         {
