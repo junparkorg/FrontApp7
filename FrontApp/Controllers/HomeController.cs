@@ -85,7 +85,7 @@ namespace FrontApp.Controllers
             return View();
         }
 
-
+        // put random delay 
         public async Task<IActionResult> RandomDelay()
         {
             var delay = Random.Shared.Next(1, 10000);
