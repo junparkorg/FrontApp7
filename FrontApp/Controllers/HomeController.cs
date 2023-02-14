@@ -21,6 +21,7 @@ namespace FrontApp.Controllers
             _cacheTelemetry = cacheTelemetry;
         }
 
+        // Getting Weather info from API service.
         public async Task<IActionResult> Index()
         {
             ViewData["Message"] = "Hello from webfrontend";
@@ -36,6 +37,7 @@ namespace FrontApp.Controllers
             return View();
         }
 
+        // Access Redis Cache in k8s
         public async Task<IActionResult> Redis()
         {
             string cachedTimeUtc = string.Empty;
@@ -61,7 +63,7 @@ namespace FrontApp.Controllers
             return View();
         }
 
-
+        // Edit 
         [HttpPost]
         public async Task<string> Edit(int money, string name)
         {
@@ -94,7 +96,7 @@ namespace FrontApp.Controllers
             return View();
         }
 
-
+        // Privacy Page
         public IActionResult Privacy()
         {
             return View();
