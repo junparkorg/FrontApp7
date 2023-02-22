@@ -13,7 +13,7 @@ namespace FrontApp.Controllers
         private readonly IRedisService _redis;
         ICacheTelemetry _cacheTelemetry;
 
-        // home controller
+        // home controller ..
         public HomeController(ILogger<HomeController> logger, IRedisService redis,
             ICacheTelemetry cacheTelemetry)
         {
@@ -35,6 +35,7 @@ namespace FrontApp.Controllers
                 var response = await client.SendAsync(request);
                 ViewData["Message"] += " and " + await response.Content.ReadAsStringAsync();
             }
+                        
             return View();
         }
 
@@ -72,7 +73,7 @@ namespace FrontApp.Controllers
             {
                 return $"{name} got nothing";
             }
-
+                       
             int delay =
                 System.Security.Cryptography.RandomNumberGenerator.GetInt32(100,500 );
 
