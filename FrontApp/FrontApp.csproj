@@ -8,7 +8,6 @@
   <PropertyGroup>
 	<!-- https://learn.microsoft.com/en-us/dotnet/core/docker/publish-as-container -->
 	<EnableSdkContainerSupport>true</EnableSdkContainerSupport>
-	<ContainerBaseImage>mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0-jammy-chiseled</ContainerBaseImage>
 	<ContainerImageName>front-7</ContainerImageName>
 	<ContainerImageTag>1.0.0</ContainerImageTag>
 	<ContainerRegistry>akseus.azurecr.io</ContainerRegistry>

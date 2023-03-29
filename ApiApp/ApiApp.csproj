@@ -8,6 +8,5 @@
 	<ContainerRegistry>akseus.azurecr.io</ContainerRegistry>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</ContainerImageTag>
 	<EnableSdkContainerSupport>true</EnableSdkContainerSupport>
-	<ContainerBaseImage>mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0-jammy-chiseled</ContainerBaseImage>
   </PropertyGroup>
  </Project>
