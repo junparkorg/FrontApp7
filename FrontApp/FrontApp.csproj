@@ -7,16 +7,21 @@
   </PropertyGroup>
   <PropertyGroup>
 	<!-- https://learn.microsoft.com/en-us/dotnet/core/docker/publish-as-container -->
+	<EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+	<ContainerBaseImage>mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0-jammy-chiseled</ContainerBaseImage>
 	<ContainerImageName>front-7</ContainerImageName>
 	<ContainerImageTag>1.0.0</ContainerImageTag>
 	<ContainerRegistry>akseus.azurecr.io</ContainerRegistry>
 	<ContainerImageTag Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</ContainerImageTag>
 	<ApplicationInsightsResourceId Condition="'$(ApplicationInsightsResourceId)' != ''">$(ApplicationInsightsResourceId)</ApplicationInsightsResourceId>
-	<UserSecretsId Condition="'$(UserSecretsId)' != ''">$(UserSecretsId)</UserSecretsId>	
+	<UserSecretsId Condition="'$(UserSecretsId)' != ''">$(UserSecretsId)</UserSecretsId>
  </PropertyGroup>
-  <ItemGroup>
+ <ItemGroup>
+	<ContainerPort Include="80" Type="tcp" />
+ </ItemGroup>
+
+	<ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.NET.Build.Containers" Version="0.2.7" />
     <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="prometheus-net" Version="7.0.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="7.0.0" />
