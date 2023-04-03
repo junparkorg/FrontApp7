@@ -35,6 +35,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// auth validate.
+app.UseMiddleware<CustomAuthMiddleware>();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -43,6 +46,8 @@ app.UseAuthorization();
 
 // prometheus metrics 
 app.UseMetricServer();
+
+
 //app.UseHttpMetrics();
 app.UseRequestMiddleware();
 

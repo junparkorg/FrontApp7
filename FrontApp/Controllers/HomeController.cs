@@ -33,7 +33,15 @@ namespace FrontApp.Controllers
                 var request = new System.Net.Http.HttpRequestMessage();
                 request.RequestUri = new Uri("http://ApiApp7/WeatherForecast"); 
                 var response = await client.SendAsync(request);
-                ViewData["Message"] += " and " + await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewData["Message"] += " and " + await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    ViewData["Message"] += " and " + response.StatusCode.ToString();                    
+                }
+                
             }
                         
             return View();
