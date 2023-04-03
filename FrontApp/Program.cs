@@ -35,9 +35,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// auth validate.
-app.UseMiddleware<CustomAuthMiddleware>();
-
 app.UseStaticFiles();
 
 app.UseRouting();
