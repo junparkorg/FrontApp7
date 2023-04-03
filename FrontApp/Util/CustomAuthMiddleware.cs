@@ -2,7 +2,7 @@
 
 namespace FrontApp.Util
 {
-    // add custom middleware that validate authorization bearer header
+    // Auth Middle Ware
     public class CustomAuthMiddleware
     {
         private readonly RequestDelegate _next;
