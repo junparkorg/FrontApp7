@@ -29,7 +29,7 @@ builder.Services.AddApplicationInsightsTelemetry(options: options);
 // add app insights logging
 builder.Logging.AddApplicationInsights(
         configureTelemetryConfiguration: (config) =>
-            config.ConnectionString = builder.Configuration.GetConnectionString("APPLICATIONINSIGHTS_CONNECTION_STRING"),
+            config.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"],
             configureApplicationInsightsLoggerOptions: (options) => { }
 );
 builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Category", LogLevel.Trace);
