@@ -23,7 +23,7 @@ if (multiPlex != null)
     builder.Services.AddSingleton(_ => database);
 }
 
-var appinsightsConnection = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+var appinsightsConnection = builder.Configuration["ApplicationInsights:ConnectionString"];
 
 var options = new ApplicationInsightsServiceOptions { ConnectionString = appinsightsConnection };
 builder.Services.AddApplicationInsightsTelemetry(options: options);
