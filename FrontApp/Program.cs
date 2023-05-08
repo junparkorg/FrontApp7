@@ -1,6 +1,7 @@
 using FrontApp.Data;
 using FrontApp.Util;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.Extensions.Logging;
 using Prometheus;
 using StackExchange.Redis;
 
@@ -24,6 +25,16 @@ if (multiPlex != null)
 
 var options = new ApplicationInsightsServiceOptions { ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"] };
 builder.Services.AddApplicationInsightsTelemetry(options: options);
+
+// add app insights logging
+builder.Logging.AddApplicationInsights(
+        configureTelemetryConfiguration: (config) =>
+            config.ConnectionString = builder.Configuration.GetConnectionString("APPLICATIONINSIGHTS_CONNECTION_STRING"),
+            configureApplicationInsightsLoggerOptions: (options) => { }
+);
+builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Category", LogLevel.Trace);
+
+
 var app = builder.Build();
 
 

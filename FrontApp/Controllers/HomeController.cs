@@ -93,6 +93,7 @@ namespace FrontApp.Controllers
         // generate 500 internal server error
         public IActionResult ServerError()
         {
+            _logger.LogWarning("An example of an Error level message");
             throw new Exception("Server Error!!!");
             return View();
         }
