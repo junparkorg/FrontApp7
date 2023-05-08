@@ -23,13 +23,15 @@ if (multiPlex != null)
     builder.Services.AddSingleton(_ => database);
 }
 
-var options = new ApplicationInsightsServiceOptions { ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"] };
+var appinsightsConnection = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+
+var options = new ApplicationInsightsServiceOptions { ConnectionString = appinsightsConnection };
 builder.Services.AddApplicationInsightsTelemetry(options: options);
 
 // add app insights logging
 builder.Logging.AddApplicationInsights(
         configureTelemetryConfiguration: (config) =>
-            config.ConnectionString = builder.Configuration["AzureApplicationInsightsConnectionString"],
+            config.ConnectionString = appinsightsConnection,
             configureApplicationInsightsLoggerOptions: (options) => { }
 );
 builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Category", LogLevel.Trace);
