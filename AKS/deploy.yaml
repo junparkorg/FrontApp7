@@ -15,6 +15,7 @@ spec:
          prometheus.io/scrape: 'true'
          prometheus.io/port: '80'
     spec: 
+      priorityClassName: high-priority
       containers: 
       - name: apiapp7
         image: "##API_IMG##"
