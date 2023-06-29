@@ -56,7 +56,7 @@ namespace FrontApp.Controllers
                 _cacheTelemetry.Start();
                 cachedTimeUtc = await _redis.GetAsync("CachedTimeInUTC");
 
-                if (string.IsNullOrEmpty(cachedTimeUtc))
+                if (string.IsNullOrEmpty(cachedTimeUtc)) 
                 {
                     var Now = DateTime.UtcNow.ToString();
                     TimeSpan cacheExpire = new TimeSpan(0, 0, 10);
